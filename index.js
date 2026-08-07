@@ -56,7 +56,8 @@ function saveConfig() {
   }
 }
 
-client.once('ready', () => {
+// 최신 discord.js 이벤트 이름(clientReady) 적용
+client.once('clientReady', () => {
   console.log(`✅ 봇이 정상적으로 로그인되었습니다: ${client.user.tag}`);
 });
 
@@ -90,7 +91,7 @@ client.on('interactionCreate', async (interaction) => {
         await member.send(`**[${interaction.guild.name} 공지]**\n\n${content}`);
         successCount++;
       } catch (err) {
-        // 유저가 DM 수신을 거부한 경우 예외 처리
+        // DM 차단 유저는 무시
       }
     }
     return interaction.editReply(`총 ${successCount}명에게 DM 공지를 전송했습니다.`);
@@ -261,7 +262,7 @@ client.on('interactionCreate', async (interaction) => {
 
     // F. 자판기: 상품 구매 (기본 예시)
     if (customId === 'vending_buy') {
-      const price = 1000; // 상품 가격 설정
+      const price = 1000;
       const userBalance = config.userBalances[member.id] || 0;
 
       if (userBalance < price) {
@@ -284,7 +285,6 @@ client.on('interactionCreate', async (interaction) => {
 
       await interaction.update({ content: `✅ **승인됨**: <@${targetUserId}> 님에게 **${amount.toLocaleString()}원** 충전 완료`, components: [] });
       
-      // 유저에게 DM 안내
       try {
         const targetMember = await guild.members.fetch(targetUserId);
         await targetMember.send(`🎉 충전 요청이 승인되어 **${amount.toLocaleString()}원**이 지급되었습니다!`);
