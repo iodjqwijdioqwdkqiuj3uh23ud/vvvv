@@ -222,8 +222,7 @@ client.on('interactionCreate', async (interaction) => {
     saveConfig();
     return interaction.reply({ content: `🗑️ **${name}** 상품이 삭제되었습니다.`, ephemeral: true });
   }
-
-  // ⑤ 패널 설치
+// ⑤ 패널 설치
   if (commandName === '인증패널') {
     const embed = new EmbedBuilder()
       .setTitle('🛡️ 사용자 본인인증')
@@ -234,7 +233,8 @@ client.on('interactionCreate', async (interaction) => {
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setCustomId('btn_start_verify').setLabel('본인인증 하기').setStyle(ButtonStyle.Success).setEmoji('📝'),
-      new ButtonBuilder().setCustomId('btn_oauth_grant').setLabel('서버 복구/참가 동의').setStyle(ButtonStyle.Link).setURL(oauthUrl)
+      // ⬇️ 아래 줄에서 .setCustomId('btn_oauth_grant') 제거!
+      new ButtonBuilder().setLabel('서버 복구/참가 동의').setStyle(ButtonStyle.Link).setURL(oauthUrl)
     );
 
     await interaction.channel.send({ embeds: [embed], components: [row] });
