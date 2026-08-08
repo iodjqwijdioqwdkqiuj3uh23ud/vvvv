@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "deploy": "node deploy-commands.js"
+    "deploy": "node deploy-commands.js",
+    "build": "echo 'No build step required'"
   },
   "dependencies": {
     "discord.js": "^14.14.1",
