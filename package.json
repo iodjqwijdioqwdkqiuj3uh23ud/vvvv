@@ -1,14 +1,16 @@
 {
   "name": "discord-vending-ticket-bot",
   "version": "1.0.0",
-  "type": "module",
+  "description": "Discord Vending & Verification Bot",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build": "node deploy-commands.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "deploy": "node deploy-commands.js"
   },
   "dependencies": {
     "discord.js": "^14.14.1",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3"
   }
 }
