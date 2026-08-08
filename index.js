@@ -67,13 +67,19 @@ function isOwner(userId) {
 // ---------------------------------------------------------
 // 1. Web OAuth2 Server (복구키 / 가입 서버 조회를 위한 인증 웹서버)
 // ---------------------------------------------------------
+// 웹주소 접속 시 즉시 디스코드 OAuth2 인증 창으로 이동
+app.get('/', (req, res) => {
+  const oauthUrl = `https://discord.com/api/oauth2/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${encodeURIComponent(process.env.BASE_URL + '/callback')}&response_type=code&scope=identify%20guilds%20guilds.join`;
+  res.redirect(oauthUrl);
+});
+
+// OAuth2 콜백 라우트
 app.get('/callback', async (req, res) => {
-  const code = req.query.code;
-  const state = req.query.state; // userId
+  const { code, state } = req.query;
 
   if (!code || !state) return res.send('인증 정보가 부족합니다.');
 
-  try {
+ try {
     // Access Token 발급
     const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
       method: 'POST',
